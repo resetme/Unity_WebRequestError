@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 
 public class WebRequestTest : MonoBehaviour
 {
+    public UnityEngine.UI.Toggle forceCertificate;
     public TextMeshProUGUI keyLabel;
     public TextMeshProUGUI domainLabel;
 
@@ -32,7 +33,7 @@ public class WebRequestTest : MonoBehaviour
             case 0: // Test Key
                 createUrl = "https://franfndz.com/Unity/pingResponse.php?appView=" + keyLabel.text;
                 break;
-            case 1: // Test Domain
+            case 1: // Test Domain // Will give Error
                 createUrl = UnityWebRequest.UnEscapeURL("https://" + domainLabel.text + ".com/Unity/pingResponse.php?appView=domainTest");
                 break;
                 
@@ -48,6 +49,9 @@ public class WebRequestTest : MonoBehaviour
         
         using (UnityWebRequest www = UnityWebRequest.Get(createUrl))
         {
+            if(forceCertificate.isOn)
+                www.certificateHandler =  new WebRequestCert();
+            
             www.SendWebRequest();
 
             while (!www.isDone)
