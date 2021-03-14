@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -46,6 +47,8 @@ public class WebRequestTest : MonoBehaviour
 
         
         string answer = string.Empty;
+
+        createUrl = Regex.Replace(createUrl, @"[^\u0000-\u007F]+", string.Empty);
         
         using (UnityWebRequest www = UnityWebRequest.Get(createUrl))
         {
